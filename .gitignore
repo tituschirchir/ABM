@@ -3,3 +3,5 @@ gradle/
 *.iml
 gradlew*
 .gradle/
+build/
+out/
