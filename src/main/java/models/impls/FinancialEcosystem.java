@@ -2,7 +2,9 @@ package models.impls;
 
 import models.faces.Agent;
 import models.faces.Ecosystem;
+import units.TimeKeeper;
 
+import java.time.DayOfWeek;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Queue;
@@ -12,7 +14,10 @@ public class FinancialEcosystem implements Ecosystem {
 
     @Override
     public void evolve() {
-        agentQueue.forEach(Agent::evolve);
+        TimeKeeper.getInstance().evolve();
+        DayOfWeek dayOfWeek = TimeKeeper.dateTime().getDayOfWeek();
+        if (DayOfWeek.SATURDAY != dayOfWeek && DayOfWeek.SUNDAY != dayOfWeek)
+            agentQueue.forEach(Agent::evolve);
     }
 
     @Override
