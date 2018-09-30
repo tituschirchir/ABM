@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Stock implements Valuable {
-    private final String ticker;
+
     private PriceHistory priceHistory = new PriceHistory();
 
-    public Stock(String ticker, double value) {
-        this.ticker = ticker;
+
+    public Stock(Double value) {
         priceHistory.addValue(value);
     }
 
@@ -37,7 +37,4 @@ public class Stock implements Valuable {
         return priceHistory.getCurrent();
     }
 
-    public String getTicker() {
-        return ticker;
-    }
 }
