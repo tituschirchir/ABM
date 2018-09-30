@@ -1,14 +1,16 @@
 package models.faces;
 
+import models.impls.Company;
 import models.products.Stock;
 import units.PriceHistory;
 
 import java.util.Random;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public interface Behavior extends Actionable {
-    BiConsumer<String, Exchange<Stock>> stockEvolver = (ticker, exchange) -> {
-        Stock stock = exchange.getComponent(ticker);
+    Consumer<Company> stockEvolver = (company) -> {
+        Stock stock = company.getStock();
         if (stock != null) {
             double mean = stock.getTsReturns().stream().mapToDouble(x -> x)
                     .summaryStatistics().getAverage();
@@ -17,7 +19,7 @@ public interface Behavior extends Actionable {
             double value = price.getCurrent();
             double dt = 1 / 252.;
             value = value * Math.exp((dt) * mean - 0.5 * vol * vol * new Random().nextGaussian());
-            exchange.getComponent(ticker).pushPrice(value);
+            stock.pushPrice(value);
         }
     };
 }

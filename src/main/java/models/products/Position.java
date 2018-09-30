@@ -19,7 +19,7 @@ public class Position<T extends Valuable> implements Valuable {
         this.quantity = quantity;
     }
 
-    public static <P extends Valuable> Position<P> createPosition(P component, double price, double quantity) {
+    public static <P extends Valuable> Position<P> create(P component, double price, double quantity) {
         return new Position<>(component, TimeKeeper.dateTime(), price, quantity);
     }
 
@@ -28,6 +28,6 @@ public class Position<T extends Valuable> implements Valuable {
     }
 
     public double value() {
-        return component.value() * quantity - cost;
+        return component.value() * quantity;
     }
 }

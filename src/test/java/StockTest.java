@@ -8,7 +8,7 @@ import java.util.List;
 public class StockTest {
     @Test
     public void timeseriesReturnsTest() {
-        Stock stock = new Stock("GS", 12);
+        Stock stock = new Stock(12.);
         TimeKeeper.getInstance().evolve();
         stock.pushPrice(12);
         TimeKeeper.getInstance().evolve();
