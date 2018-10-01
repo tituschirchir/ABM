@@ -1,11 +1,11 @@
 package models.impls;
 
+import injectors.Companies;
 import models.faces.Behavior;
 import models.faces.Valuable;
 import models.products.Order;
 import models.products.OrderType;
 import models.products.Position;
-import models.products.Stock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +29,8 @@ public class Trader extends AgentImpl implements Valuable {
         orders.forEach(x -> x.executeFor(this));
     }
 
-    public void placeOrder(Stock component, OrderType type, double price, double quantity) {
-        orders.add(Order.placeOrder(component, type, price, quantity));
+    public void placeOrder(String component, OrderType type, double price, double quantity) {
+        orders.add(Order.placeOrder(Companies.get(component).getStock(), type, price, quantity));
     }
 
     public List<Position<Valuable>> getStockPortfolio() {
