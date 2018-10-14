@@ -1,6 +1,5 @@
 package models.impls;
 
-import injectors.Companies;
 import models.faces.Behavior;
 import models.faces.Exchange;
 import models.products.Stock;
@@ -34,7 +33,7 @@ public class Company extends AgentImpl {
         return stock;
     }
 
-    public Exchange<Company> getExchange(){
+    public Exchange<Company> getExchange() {
         return StockExchange.get(exchange);
     }
 }
