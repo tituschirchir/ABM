@@ -1,8 +1,10 @@
-package models.jdbctest;
+package dataaccess.models;
+
+import dataaccess.helpers.DbObject;
 
 import java.sql.Timestamp;
 
-public class PriceHistory {
+public class PriceHistory implements DbObject {
     private String ticker;
     private Timestamp time;
     private double value;
@@ -15,8 +17,8 @@ public class PriceHistory {
         this.ticker = ticker;
     }
 
-    public Timestamp getTime() {
-        return time;
+    public String getTime() {
+        return time.toString();
     }
 
     public void setTime(Timestamp time) {
@@ -29,13 +31,5 @@ public class PriceHistory {
 
     public void setValue(double value) {
         this.value = value;
-    }
-
-    @Override
-    public String toString() {
-        return "PriceHistory{" + "ticker='" + ticker + '\'' +
-                ", time=" + time +
-                ", value=" + value +
-                '}';
     }
 }
