@@ -1,5 +1,6 @@
 package services;
 
+import avro.Tick;
 import dataaccess.models.Company;
 import dataaccess.models.PriceHistory;
 import org.springframework.stereotype.Service;
@@ -23,4 +24,10 @@ public interface ExchangeService {
     RHQuote quote(String ticker);
 
     List<RHSplit> splits(String ticker);
+
+
+    avro.Company iexStock(String ticker);
+
+
+    List<Tick> ticks(String ticker);
 }

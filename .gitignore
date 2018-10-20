@@ -5,3 +5,4 @@ gradlew*
 .gradle/
 build/
 out/
+src/main/java/avro/
