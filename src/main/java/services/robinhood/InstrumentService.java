@@ -1,8 +1,12 @@
 package services.robinhood;
 
+import avro.Company;
+import avro.Tick;
 import dataaccess.models.Quote;
 import dataaccess.models.RHTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.client.RestTemplate;
@@ -47,5 +51,18 @@ public class InstrumentService {
         RHSplitList forObject = restTemplate.getForObject(getInstrumentInfo(ticker).getSplits(),
                 RHSplitList.class);
         return forObject.getResults();
+    }
+
+    public Company getIexStock(String ticker) {
+        String url = String.format("https://api.iextrading.com/1.0/stock/%s/company", ticker.toUpperCase());
+        ResponseEntity<Company> rhi = restTemplate.getForEntity(url, Company.class);
+        return rhi.getBody();
+    }
+
+    public List<Tick> getTicks(String ticker) {
+        String url = String.format("https://api.iextrading.com/1.0/stock/%s/chart/3m", ticker.toUpperCase());
+        ResponseEntity<List<Tick>> rhi = restTemplate.exchange(url, HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<Tick>>() {});
+        return rhi.getBody();
     }
 }

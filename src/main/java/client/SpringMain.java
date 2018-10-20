@@ -9,7 +9,7 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-public class Main {
+public class SpringMain {
     public static void main(String[] args) throws Exception {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.register(AppConfig.class);

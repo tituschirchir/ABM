@@ -1,5 +1,6 @@
 package services;
 
+import avro.Tick;
 import dataaccess.DAO.CompanyDao;
 import dataaccess.DAO.PriceHistoryDAO;
 import dataaccess.models.Company;
@@ -67,6 +68,19 @@ public class ExchangeServiceImpl implements ExchangeService {
     @ResponseBody
     public List<RHSplit> splits(@RequestParam("ticker") String ticker) {
         return instrumentService.getSplits(ticker);
+    }
+
+    @Override
+    @RequestMapping(path = "/iexStock", method = RequestMethod.GET)
+    @ResponseBody
+    public avro.Company iexStock(@RequestParam("ticker") String ticker) {
+        return instrumentService.getIexStock(ticker);
+    }
+    @Override
+    @RequestMapping(path = "/ticks", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Tick> ticks(@RequestParam("ticker") String ticker) {
+        return instrumentService.getTicks(ticker);
     }
 
 }
