@@ -20,7 +20,7 @@ public class SpringMain {
         sch.addServlet(sh, "/*");
         sch.addFilter(filter(), "/*", null);
 
-        Server server = new Server(1212);
+        Server server = new Server(1213);
         server.setHandler(sch);
         server.start();
     }

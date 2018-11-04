@@ -8,7 +8,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -20,11 +19,6 @@ public class AppConfig {
 
     @Bean
     public JdbcTemplate jdbcTemplate() {
-        return new JdbcTemplate(getDataSource());
-    }
-
-    @Bean
-    public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         Properties props = new Properties();
         try (FileInputStream in = new FileInputStream("src/main/resources/db.local.properties")) {
@@ -36,7 +30,7 @@ public class AppConfig {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return dataSource;
+        return new JdbcTemplate(dataSource);
     }
 
     @Bean

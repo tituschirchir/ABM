@@ -2,6 +2,7 @@ package services.robinhood;
 
 import avro.Company;
 import avro.Tick;
+import dataaccess.DAO.CompanyDao;
 import dataaccess.models.Quote;
 import dataaccess.models.RHTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,12 @@ import java.util.List;
 @Controller
 public class InstrumentService {
     private final RestTemplate restTemplate;
+    private final CompanyDao companyDao;
 
     @Autowired
-    public InstrumentService(RestTemplate restTemplate) {
+    public InstrumentService(RestTemplate restTemplate, CompanyDao companyDao) {
         this.restTemplate = restTemplate;
+        this.companyDao = companyDao;
     }
 
     public RHCompany getCompanyInfo(String ticker) {
@@ -56,7 +59,9 @@ public class InstrumentService {
     public Company getIexStock(String ticker) {
         String url = String.format("https://api.iextrading.com/1.0/stock/%s/company", ticker.toUpperCase());
         ResponseEntity<Company> rhi = restTemplate.getForEntity(url, Company.class);
-        return rhi.getBody();
+        Company co = rhi.getBody();
+        companyDao.insert(co);
+        return co;
     }
 
     public List<Tick> getTicks(String ticker) {

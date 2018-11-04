@@ -1,9 +1,10 @@
 package services;
 
+import avro.Company;
 import avro.Tick;
-import dataaccess.models.Company;
 import dataaccess.models.PriceHistory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import services.robinhood.RHCompany;
 import services.robinhood.RHInstrument;
 import services.robinhood.RHQuote;
@@ -30,4 +31,6 @@ public interface ExchangeService {
 
 
     List<Tick> ticks(String ticker);
+
+    avro.Company companies(@RequestParam("ticker") String ticker);
 }

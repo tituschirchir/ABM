@@ -1,9 +1,9 @@
 package services;
 
+import avro.Company;
 import avro.Tick;
 import dataaccess.DAO.CompanyDao;
 import dataaccess.DAO.PriceHistoryDAO;
-import dataaccess.models.Company;
 import dataaccess.models.PriceHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import services.robinhood.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ExchangeServiceImpl implements ExchangeService {
@@ -32,14 +33,15 @@ public class ExchangeServiceImpl implements ExchangeService {
     @RequestMapping(path = "/price", method = RequestMethod.GET)
     @ResponseBody
     public List<PriceHistory> pricesHistoryFor(@RequestParam("ticker") String ticker) {
-        return phDao.getHistory(ticker);
+        List<PriceHistory> all = phDao.getAll();
+        return all.stream().filter(x -> ticker.equals(x.getTicker())).collect(Collectors.toList());
     }
 
     @Override
     @RequestMapping(path = "/companies", method = RequestMethod.GET)
     @ResponseBody
     public List<Company> companies() {
-        return companyDao.allCompanies();
+        return companyDao.getAll();
     }
 
     @Override
@@ -76,11 +78,19 @@ public class ExchangeServiceImpl implements ExchangeService {
     public avro.Company iexStock(@RequestParam("ticker") String ticker) {
         return instrumentService.getIexStock(ticker);
     }
+
     @Override
     @RequestMapping(path = "/ticks", method = RequestMethod.GET)
     @ResponseBody
     public List<Tick> ticks(@RequestParam("ticker") String ticker) {
         return instrumentService.getTicks(ticker);
+    }
+
+    @Override
+    @RequestMapping(path = "/comp", method = RequestMethod.GET)
+    @ResponseBody
+    public avro.Company companies(@RequestParam("ticker") String ticker) {
+        return instrumentService.getIexStock(ticker);
     }
 
 }

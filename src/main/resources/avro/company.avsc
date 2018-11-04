@@ -28,7 +28,7 @@
       "type": "string"
     },
     {
-      "name": "CEO",
+      "name": "ceo",
       "type": "string"
     },
     {
@@ -38,13 +38,6 @@
     {
       "name": "sector",
       "type": "string"
-    },
-    {
-      "name": "tags",
-      "type": {
-        "type": "array",
-        "items": "string"
-      }
     }
   ]
 }
